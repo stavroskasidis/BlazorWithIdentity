@@ -4,5 +4,5 @@ A sample project showcasing a blazor app using ef core with identity
 
 ### How to run
 1. Clone or download
-2. Run in visual studio
-3. Create a user using the `Create Account` button
+2. Run the app using visual studio
+3. Create a user using the `Create Account` button in the login page or login if you have already created a user
