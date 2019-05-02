@@ -1,4 +1,5 @@
 ﻿using BlazorWithIdentity.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace BlazorWithIdentity.Server.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class SampleDataController : Controller
     {
         private static string[] Summaries = new[]
