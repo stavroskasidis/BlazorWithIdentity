@@ -1,0 +1,50 @@
+﻿@page "/login"
+@layout LoginLayout
+@inject IUriHelper uriHelper
+@inject AuthenticationState state
+
+<h1 class="h2 font-weight-normal login-title">
+    Blazor with Identity Sample
+</h1>>
+
+<form class="form-signin">
+    <h4 class="font-weight-normal text-center">Login</h4>
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input id="inputEmail" class="form-control" placeholder="Username" required="" autofocus="" bind="@username" onkeyup="@OnKeyUp" />
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" bind="@password" onkeyup="@OnKeyUp" />
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="@SignInClick">Sign in</button>
+    <label class="text-danger">@error</label>
+    <NavLink href="register">
+        <h6 class="font-weight-normal text-center">Create account</h6>
+    </NavLink>
+</form>
+
+@functions{
+
+    string username { get; set; }
+    string password { get; set; }
+    string error { get; set; }
+
+    async Task OnKeyUp(UIKeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SignInClick();
+        }
+    }
+
+    async Task SignInClick()
+    {
+        error = null;
+        try
+        {
+            await state.Login(username, password);
+            uriHelper.NavigateTo("");
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+    }
+}

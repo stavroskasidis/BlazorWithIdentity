@@ -1,0 +1,42 @@
+﻿@page "/register"
+@layout LoginLayout
+@inject IUriHelper uriHelper
+@inject AuthenticationState state
+
+    <h1 class="h2 font-weight-normal login-title">
+        Blazor with Identity Sample
+    </h1>
+
+<form class="form-signin">
+    <h4 class="font-weight-normal text-center">Create Account</h4>
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input id="inputEmail" class="form-control" placeholder="Username" required="" autofocus="" bind="@username" />
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" bind="@password" />
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="@RegisterClick">Create account</button>
+    <label class="text-danger">@error</label>
+    <NavLink href="login">
+        <h6 class="font-weight-normal text-center">Already have an account? Click here to login</h6>
+    </NavLink>
+</form>
+
+@functions{
+
+    string username { get; set; }
+    string password { get; set; }
+    string error { get; set; }
+
+    async Task RegisterClick()
+    {
+        error = null;
+        try
+        {
+            await state.Register(username, password);
+            uriHelper.NavigateTo("");
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+    }
+}
