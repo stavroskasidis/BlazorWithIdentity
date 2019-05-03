@@ -1,4 +1,5 @@
 ﻿using BlazorWithIdentity.Client.Services.Contracts;
+using BlazorWithIdentity.Shared;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,16 @@ namespace BlazorWithIdentity.Client.States
             return _jsRuntime.InvokeAsync<bool>("Authorization_LoginCookieExists");
         }
 
-        public async Task Login(string username, string password)
+        public async Task Login(LoginParameters loginParameters)
         {
-            await _authorizeApi.Login(username, password);
-            UserName = username;
+            await _authorizeApi.Login(loginParameters);
+            UserName = loginParameters.Username;
         }
 
-        public async Task Register(string username, string password)
+        public async Task Register(RegisterParameters registerParameters)
         {
-            await _authorizeApi.Register(username, password);
-            UserName = username;
+            await _authorizeApi.Register(registerParameters);
+            UserName = registerParameters.Username;
         }
 
         public async Task Logout()

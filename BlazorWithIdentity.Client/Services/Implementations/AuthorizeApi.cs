@@ -19,13 +19,9 @@ namespace BlazorWithIdentity.Client.Services.Implementations
             _httpClient = httpClient;
         }
 
-        public async Task Login(string username, string password)
+        public async Task Login(LoginParameters loginParameters)
         {
-            var stringContent = new StringContent(Json.Serialize(new LoginParameters
-            {
-                Username = username,
-                Password = password
-            }), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(Json.Serialize(loginParameters), Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsync("api/Authorize/Login", stringContent);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
@@ -37,14 +33,9 @@ namespace BlazorWithIdentity.Client.Services.Implementations
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task Register(string username, string password)
+        public async Task Register(RegisterParameters registerParameters)
         {
-            var stringContent = new StringContent(Json.Serialize(new LoginParameters
-            {
-                Username = username,
-                Password = password
-            }), Encoding.UTF8, "application/json");
-
+            var stringContent = new StringContent(Json.Serialize(registerParameters), Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsync("api/Authorize/Register", stringContent);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
