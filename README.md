@@ -9,4 +9,4 @@ A sample project showcasing a blazor app using ef core with identity
 4. Create a user using the `Create Account` button in the login page or login if you have already created a user.
 
 ### Live demo
-https://blazorwithidentity.azurewebsites.net/login
+https://blazorwithidentity.azurewebsites.net/
