@@ -1,7 +1,26 @@
 ﻿@page "/"
+@inject AuthenticationState authState
 
-<h1>Hello, world!</h1>
+@if (userInfo != null)
+{
+    <h1>Hello @userInfo.Username !!</h1>
 
-Welcome to your new app.
+    <p>Welcome to your new app.</p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <SurveyPrompt Title="How is Blazor working for you?" />
+}
+else
+{
+    <h1>Loading ...</h1>
+}
+
+
+
+@functions{
+    UserInfo userInfo;
+
+    protected override async Task OnInitAsync()
+    {
+        userInfo = await authState.GetUserInfo();
+    }
+}

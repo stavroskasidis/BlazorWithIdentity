@@ -190,12 +190,12 @@ app {
         }
 
     .form-signin input {
-        margin-bottom: 2px;
+        margin-bottom: 5px;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
     }
 
-    .form-signin input[type="password"] {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
+        .form-signin input[type="password"] {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }

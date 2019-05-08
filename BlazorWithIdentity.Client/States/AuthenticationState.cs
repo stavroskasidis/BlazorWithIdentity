@@ -12,8 +12,7 @@ namespace BlazorWithIdentity.Client.States
     {
         private readonly IAuthorizeApi _authorizeApi;
         private readonly IJSRuntime _jsRuntime;
-
-        public string UserName { get; protected set; }
+        private UserInfo userInfo;
 
         public AuthenticationState(IAuthorizeApi authorizeApi, IJSRuntime jsRuntime)
         {
@@ -28,20 +27,25 @@ namespace BlazorWithIdentity.Client.States
 
         public async Task Login(LoginParameters loginParameters)
         {
-            await _authorizeApi.Login(loginParameters);
-            UserName = loginParameters.Username;
+            userInfo = await _authorizeApi.Login(loginParameters);
         }
 
         public async Task Register(RegisterParameters registerParameters)
         {
-            await _authorizeApi.Register(registerParameters);
-            UserName = registerParameters.Username;
+            userInfo = await _authorizeApi.Register(registerParameters);
         }
 
         public async Task Logout()
         {
             await _authorizeApi.Logout();
-            UserName = null;
+            userInfo = null;
+        }
+
+        public async Task<UserInfo> GetUserInfo()
+        {
+            if (userInfo != null) return userInfo;
+            userInfo = await _authorizeApi.GetUserInfo();
+            return userInfo;
         }
 
     }

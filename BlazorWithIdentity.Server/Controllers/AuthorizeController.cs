@@ -31,14 +31,14 @@ namespace BlazorWithIdentity.Server.Controllers
                                                                        .Select(error => error.ErrorMessage)
                                                                        .FirstOrDefault());
 
-            var user = await _userManager.FindByNameAsync(parameters.Username);
+            var user = await _userManager.FindByNameAsync(parameters.UserName);
             if (user == null) return BadRequest("User does not exist");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
             if (!singInResult.Succeeded) return BadRequest("Invalid password");
 
-            await _signInManager.SignInAsync(user, true);
+            await _signInManager.SignInAsync(user, parameters.RememberMe);
 
-            return Ok();
+            return Ok(BuildUserInfo(user));
         }
 
 
@@ -50,13 +50,13 @@ namespace BlazorWithIdentity.Server.Controllers
                                                                         .FirstOrDefault());
 
             var user = new ApplicationUser();
-            user.UserName = parameters.Username;
+            user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
 
             return await Login(new LoginParameters
             {
-                Username = parameters.Username,
+                UserName = parameters.UserName,
                 Password = parameters.Password
             });
         }
@@ -66,6 +66,23 @@ namespace BlazorWithIdentity.Server.Controllers
         {
             await _signInManager.SignOutAsync();
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<UserInfo> UserInfo()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return BuildUserInfo(user);
+        }
+
+
+        private UserInfo BuildUserInfo(ApplicationUser user)
+        {
+            return new UserInfo
+            {
+                Username = user.UserName
+            };
         }
     }
 }
