@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace BlazorWithIdentity.Server.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthorizeController : ControllerBase
@@ -24,6 +23,7 @@ namespace BlazorWithIdentity.Server.Controllers
             _signInManager = signInManager;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginParameters parameters)
         {
@@ -42,6 +42,7 @@ namespace BlazorWithIdentity.Server.Controllers
         }
 
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterParameters parameters)
         {
@@ -61,6 +62,7 @@ namespace BlazorWithIdentity.Server.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

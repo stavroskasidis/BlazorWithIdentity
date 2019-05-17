@@ -4,6 +4,8 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BlazorWithIdentity.Client.States
@@ -20,9 +22,17 @@ namespace BlazorWithIdentity.Client.States
             _jsRuntime = jsRuntime;
         }
 
-        public Task<bool> IsLoggedIn()
+        public async Task<bool> IsLoggedIn()
         {
-            return _jsRuntime.InvokeAsync<bool>("Authorization_LoginCookieExists");
+            try
+            {
+                var userInfo = await GetUserInfo();
+                return userInfo != null;
+            }
+            catch (HttpRequestException)
+            {
+                return false;
+            }
         }
 
         public async Task Login(LoginParameters loginParameters)
