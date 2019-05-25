@@ -13,13 +13,11 @@ namespace BlazorWithIdentity.Client.States
     public class AuthenticationState
     {
         private readonly IAuthorizeApi _authorizeApi;
-        private readonly IJSRuntime _jsRuntime;
         private UserInfo userInfo;
 
-        public AuthenticationState(IAuthorizeApi authorizeApi, IJSRuntime jsRuntime)
+        public AuthenticationState(IAuthorizeApi authorizeApi)
         {
             _authorizeApi = authorizeApi;
-            _jsRuntime = jsRuntime;
         }
 
         public async Task<bool> IsLoggedIn()
