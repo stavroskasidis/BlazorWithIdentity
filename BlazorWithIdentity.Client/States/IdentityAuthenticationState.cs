@@ -10,27 +10,14 @@ using System.Threading.Tasks;
 
 namespace BlazorWithIdentity.Client.States
 {
-    public class AuthenticationState
+    public class IdentityAuthenticationState
     {
         private readonly IAuthorizeApi _authorizeApi;
         private UserInfo userInfo;
 
-        public AuthenticationState(IAuthorizeApi authorizeApi)
+        public IdentityAuthenticationState(IAuthorizeApi authorizeApi)
         {
             _authorizeApi = authorizeApi;
-        }
-
-        public async Task<bool> IsLoggedIn()
-        {
-            try
-            {
-                var userInfo = await GetUserInfo();
-                return userInfo != null;
-            }
-            catch (HttpRequestException)
-            {
-                return false;
-            }
         }
 
         public async Task Login(LoginParameters loginParameters)
@@ -51,7 +38,7 @@ namespace BlazorWithIdentity.Client.States
 
         public async Task<UserInfo> GetUserInfo()
         {
-            if (userInfo != null) return userInfo;
+            if (userInfo != null && userInfo.IsAuthenticated) return userInfo;
             userInfo = await _authorizeApi.GetUserInfo();
             return userInfo;
         }

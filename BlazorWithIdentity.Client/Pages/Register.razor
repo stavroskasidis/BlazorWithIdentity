@@ -1,7 +1,7 @@
 ﻿@page "/register"
 @layout LoginLayout
 @inject IUriHelper uriHelper
-@inject AuthenticationState state
+@inject IdentityAuthenticationState state
 
 <h1 class="h2 font-weight-normal login-title">
     Blazor with Identity Sample
@@ -9,17 +9,17 @@
 
 @*TODO: Add client-side validation*@
 
-<form class="form-signin" onsubmit="@OnSubmit">
+<form class="form-signin" @onsubmit="@OnSubmit">
     <h4 class="font-weight-normal text-center">Create Account</h4>
     
     <label for="inputUsername" class="sr-only">User Name</label>
-    <input id="inputUsername" class="form-control" placeholder="Username" required autofocus bind="@registerParameters.UserName" />
+    <input id="inputUsername" class="form-control" placeholder="Username" required autofocus @bind="@registerParameters.UserName" />
     
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required bind="@registerParameters.Password" />
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required @bind="@registerParameters.Password" />
 
     <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" required bind="@registerParameters.PasswordConfirm" />
+    <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" required @bind="@registerParameters.PasswordConfirm" />
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
 

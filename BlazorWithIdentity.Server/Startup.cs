@@ -91,6 +91,8 @@ namespace BlazorWithIdentity.Server
                 app.UseBlazorDebugging();
             }
 
+            app.UseClientSideBlazorFiles<Client.Startup>();
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -98,9 +100,8 @@ namespace BlazorWithIdentity.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapFallbackToClientSideBlazor<Client.Startup>("index.html");
             });
-
-            app.UseBlazor<Client.Startup>();
         }
     }
 }

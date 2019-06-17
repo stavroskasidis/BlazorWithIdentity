@@ -23,7 +23,6 @@ namespace BlazorWithIdentity.Server.Controllers
             _signInManager = signInManager;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginParameters parameters)
         {
@@ -38,11 +37,10 @@ namespace BlazorWithIdentity.Server.Controllers
 
             await _signInManager.SignInAsync(user, parameters.RememberMe);
 
-            return Ok(BuildUserInfo(user));
+            return Ok(BuildUserInfo());
         }
 
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterParameters parameters)
         {
@@ -70,20 +68,24 @@ namespace BlazorWithIdentity.Server.Controllers
             return Ok();
         }
 
-        [Authorize]
         [HttpGet]
-        public async Task<UserInfo> UserInfo()
+        public UserInfo UserInfo()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            return BuildUserInfo(user);
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+            return BuildUserInfo();
         }
 
 
-        private UserInfo BuildUserInfo(ApplicationUser user)
+        private UserInfo BuildUserInfo()
         {
             return new UserInfo
             {
-                Username = user.UserName
+                IsAuthenticated = User.Identity.IsAuthenticated,
+                UserName = User.Identity.Name,
+                ExposedClaims = User.Claims
+                    //Optionally: filter the claims you want to expose to the client
+                    //.Where(c => c.Type == "test-claim")
+                    .ToDictionary(c => c.Type, c => c.Value)
             };
         }
     }
