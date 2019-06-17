@@ -12,13 +12,19 @@ using System.Threading.Tasks;
 
 namespace BlazorWithIdentity.Client.States
 {
-    public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
+    public class IdentityAuthenticationStateProvider : AuthenticationStateProvider, IDisposable
     {
         private readonly IdentityAuthenticationState state;
 
         public IdentityAuthenticationStateProvider(IdentityAuthenticationState state)
         {
             this.state = state;
+            this.state.UserInfoChanged += State_UserInfoChanged;
+        }
+
+        private void State_UserInfoChanged(UserInfo obj)
+        {
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -39,6 +45,11 @@ namespace BlazorWithIdentity.Client.States
             }
 
             return new AuthenticationState(new ClaimsPrincipal(identity));
+        }
+
+        public void Dispose()
+        {
+            this.state.UserInfoChanged -= State_UserInfoChanged;
         }
     }
 }
