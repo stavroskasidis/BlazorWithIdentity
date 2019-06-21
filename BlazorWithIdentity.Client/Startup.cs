@@ -14,8 +14,8 @@ namespace BlazorWithIdentity.Client
         {
            
             services.AddAuthorizationCore();
-            services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationStateProvider>();
-            services.AddScoped<IdentityAuthenticationState>();
+            services.AddScoped<IdentityAuthenticationStateProvider>();
+            services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<IdentityAuthenticationStateProvider>());
             services.AddScoped<IAuthorizeApi, AuthorizeApi>();
         }
 

@@ -1,7 +1,8 @@
 ﻿@page "/login"
 @layout LoginLayout
 @inject IUriHelper uriHelper
-@inject IdentityAuthenticationState state
+@inject IAuthorizeApi authApi
+@inject IdentityAuthenticationStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
     Blazor with Identity Sample
@@ -41,7 +42,8 @@
         error = null;
         try
         {
-            await state.Login(loginParameters);
+            var userInfo = await authApi.Login(loginParameters);
+            authStateProvider.SetUserInfo(userInfo);
             uriHelper.NavigateTo("");
         }
         catch (Exception ex)

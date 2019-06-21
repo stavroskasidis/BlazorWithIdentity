@@ -1,7 +1,8 @@
 ﻿@page "/register"
 @layout LoginLayout
 @inject IUriHelper uriHelper
-@inject IdentityAuthenticationState state
+@inject IAuthorizeApi authApi
+@inject IdentityAuthenticationStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
     Blazor with Identity Sample
@@ -11,10 +12,10 @@
 
 <form class="form-signin" @onsubmit="@OnSubmit">
     <h4 class="font-weight-normal text-center">Create Account</h4>
-    
+
     <label for="inputUsername" class="sr-only">User Name</label>
     <input id="inputUsername" class="form-control" placeholder="Username" required autofocus @bind="@registerParameters.UserName" />
-    
+
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" class="form-control" placeholder="Password" required @bind="@registerParameters.Password" />
 
@@ -39,7 +40,8 @@
         error = null;
         try
         {
-            await state.Register(registerParameters);
+            var userInfo = await authApi.Register(registerParameters);
+            authStateProvider.SetUserInfo(userInfo);
             uriHelper.NavigateTo("");
         }
         catch (Exception ex)

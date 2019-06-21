@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
-@inject IdentityAuthenticationState state
+@inject IAuthorizeApi authApi
 @inject IUriHelper uriHelper
+@inject IdentityAuthenticationStateProvider authStateProvider
 
 <AuthorizeView>
     <Authorized>
@@ -35,7 +36,8 @@
 
     async Task LogoutClick()
     {
-        await state.Logout();
+        await authApi.Logout();
+        authStateProvider.SetUserInfo(null);
         uriHelper.NavigateTo("/login");
     }
 }

@@ -12,30 +12,25 @@ using System.Threading.Tasks;
 
 namespace BlazorWithIdentity.Client.States
 {
-    public class IdentityAuthenticationStateProvider : AuthenticationStateProvider, IDisposable
+    public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private readonly IdentityAuthenticationState state;
+        private UserInfo _userInfo;
 
-        public IdentityAuthenticationStateProvider(IdentityAuthenticationState state)
+        public void SetUserInfo(UserInfo userInfo)
         {
-            this.state = state;
-            this.state.UserInfoChanged += State_UserInfoChanged;
-        }
-
-        private void State_UserInfoChanged(UserInfo obj)
-        {
+            this._userInfo = userInfo;
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
             try
             {
-                var userInfo = await state.GetUserInfo();
-                if(userInfo.IsAuthenticated)
+                var isAuthenticated = _userInfo?.IsAuthenticated;
+                if(isAuthenticated == true)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, userInfo.UserName) }.Concat(userInfo.ExposedClaims.Select(c => new Claim(c.Key, c.Value)));
+                    var claims = new[] { new Claim(ClaimTypes.Name, _userInfo.UserName) }.Concat(_userInfo.ExposedClaims.Select(c => new Claim(c.Key, c.Value)));
                     identity = new ClaimsIdentity(claims, "Server authentication");
                 }
             }
@@ -44,12 +39,7 @@ namespace BlazorWithIdentity.Client.States
                 Console.WriteLine("Request failed:" + ex.ToString());
             }
 
-            return new AuthenticationState(new ClaimsPrincipal(identity));
-        }
-
-        public void Dispose()
-        {
-            this.state.UserInfoChanged -= State_UserInfoChanged;
+            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
         }
     }
 }
