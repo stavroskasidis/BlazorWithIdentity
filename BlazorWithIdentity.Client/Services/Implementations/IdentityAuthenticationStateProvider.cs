@@ -14,23 +14,49 @@ namespace BlazorWithIdentity.Client.States
 {
     public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private UserInfo _userInfo;
+        private UserInfo _userInfoCache;
+        private readonly IAuthorizeApi _authorizeApi;
 
-        public void SetUserInfo(UserInfo userInfo)
+        public IdentityAuthenticationStateProvider(IAuthorizeApi authorizeApi)
         {
-            this._userInfo = userInfo;
+            this._authorizeApi = authorizeApi;
+        }
+
+        public async Task Login(LoginParameters loginParameters)
+        {
+            _userInfoCache = await _authorizeApi.Login(loginParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-        public override Task<AuthenticationState> GetAuthenticationStateAsync()
+        public async Task Register(RegisterParameters registerParameters)
+        {
+            _userInfoCache = await _authorizeApi.Register(registerParameters);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
+        public async Task Logout()
+        {
+            await _authorizeApi.Logout();
+            _userInfoCache = null;
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
+        private async Task<UserInfo> GetUserInfo()
+        {
+            if (_userInfoCache != null && _userInfoCache.IsAuthenticated) return _userInfoCache;
+            _userInfoCache = await _authorizeApi.GetUserInfo();
+            return _userInfoCache;
+        }
+
+        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
             try
             {
-                var isAuthenticated = _userInfo?.IsAuthenticated;
-                if(isAuthenticated == true)
+                var userInfo = await GetUserInfo();
+                if (userInfo.IsAuthenticated)
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, _userInfo.UserName) }.Concat(_userInfo.ExposedClaims.Select(c => new Claim(c.Key, c.Value)));
+                    var claims = new[] { new Claim(ClaimTypes.Name, _userInfoCache.UserName) }.Concat(_userInfoCache.ExposedClaims.Select(c => new Claim(c.Key, c.Value)));
                     identity = new ClaimsIdentity(claims, "Server authentication");
                 }
             }
@@ -39,7 +65,7 @@ namespace BlazorWithIdentity.Client.States
                 Console.WriteLine("Request failed:" + ex.ToString());
             }
 
-            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
+            return new AuthenticationState(new ClaimsPrincipal(identity));
         }
     }
 }

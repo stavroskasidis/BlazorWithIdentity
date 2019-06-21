@@ -1,7 +1,6 @@
 ﻿@page "/login"
 @layout LoginLayout
 @inject IUriHelper uriHelper
-@inject IAuthorizeApi authApi
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
@@ -42,8 +41,7 @@
         error = null;
         try
         {
-            var userInfo = await authApi.Login(loginParameters);
-            authStateProvider.SetUserInfo(userInfo);
+            await authStateProvider.Login(loginParameters);
             uriHelper.NavigateTo("");
         }
         catch (Exception ex)

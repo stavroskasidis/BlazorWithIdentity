@@ -1,7 +1,6 @@
 ﻿@page "/register"
 @layout LoginLayout
 @inject IUriHelper uriHelper
-@inject IAuthorizeApi authApi
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
@@ -40,8 +39,7 @@
         error = null;
         try
         {
-            var userInfo = await authApi.Register(registerParameters);
-            authStateProvider.SetUserInfo(userInfo);
+            await authStateProvider.Register(registerParameters);
             uriHelper.NavigateTo("");
         }
         catch (Exception ex)
