@@ -24,13 +24,13 @@ namespace BlazorWithIdentity.Client.States
 
         public async Task Login(LoginParameters loginParameters)
         {
-            _userInfoCache = await _authorizeApi.Login(loginParameters);
+            await _authorizeApi.Login(loginParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
         public async Task Register(RegisterParameters registerParameters)
         {
-            _userInfoCache = await _authorizeApi.Register(registerParameters);
+            await _authorizeApi.Register(registerParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 

@@ -37,7 +37,7 @@ namespace BlazorWithIdentity.Server.Controllers
 
             await _signInManager.SignInAsync(user, parameters.RememberMe);
 
-            return Ok(BuildUserInfo());
+            return Ok();
         }
 
 
