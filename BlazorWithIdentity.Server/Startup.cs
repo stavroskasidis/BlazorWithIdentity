@@ -65,13 +65,10 @@ namespace BlazorWithIdentity.Server
             });
 
             services.AddControllers().AddNewtonsoftJson();
-            services.AddResponseCompression(options =>
+            services.AddResponseCompression(opts =>
             {
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
-                {
-                    MediaTypeNames.Application.Octet,
-                    WasmMediaTypeNames.Application.Wasm,
-                });
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
             });
         }
 
