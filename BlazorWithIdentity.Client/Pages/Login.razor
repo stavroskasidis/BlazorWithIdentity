@@ -9,29 +9,33 @@
 
 @*TODO: Add client-side validation*@
 
-<form class="form-signin" @onsubmit="@OnSubmit">
+<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginParameters">
+    <DataAnnotationsValidator />
     <h4 class="font-weight-normal text-center">Login</h4>
 
     <label for="inputUsername" class="sr-only">User Name</label>
-    <input id="inputUsername" class="form-control" placeholder="Username" required autofocus @bind="@loginParameters.UserName" />
+    <InputText id="inputUsername" class="form-control" @bind-Value="loginParameters.UserName" autofocus placeholder="Username" />
+    <ValidationMessage For="@(() => loginParameters.UserName)" />
 
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required @bind="@loginParameters.Password" />
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginParameters.Password" />
+    <ValidationMessage For="@(() => loginParameters.Password)" />
 
     <div class="form-check m-3">
-        <input type="checkbox" id="inputRememberMe" class="form-check-input" @bind="@loginParameters.RememberMe" />
+        <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@loginParameters.RememberMe" />
         <label class="form-check-label" for="inputRememberMe">Remember Me</label>
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
     <label class="text-danger">@error</label>
+
     <NavLink href="register">
         <h6 class="font-weight-normal text-center">Create account</h6>
     </NavLink>
-</form>
+</EditForm>
 
-@functions{
+@code{
 
     LoginParameters loginParameters { get; set; } = new LoginParameters();
     string error { get; set; }
