@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IUriHelper uriHelper
+@inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <AuthorizeView>
@@ -29,13 +29,13 @@
     {
         if (!(await AuthenticationState).User.Identity.IsAuthenticated)
         {
-            uriHelper.NavigateTo("/login");
+            navigationManager.NavigateTo("/login");
         }
     }
 
     async Task LogoutClick()
     {
         await authStateProvider.Logout();
-        uriHelper.NavigateTo("/login");
+        navigationManager.NavigateTo("/login");
     }
 }

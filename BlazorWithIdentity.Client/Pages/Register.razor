@@ -1,13 +1,11 @@
 ﻿@page "/register"
 @layout LoginLayout
-@inject IUriHelper uriHelper
+@inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <h1 class="h2 font-weight-normal login-title">
     Blazor with Identity Sample
 </h1>
-
-@*TODO: Add client-side validation*@
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
     <DataAnnotationsValidator />
@@ -44,7 +42,7 @@
         try
         {
             await authStateProvider.Register(registerParameters);
-            uriHelper.NavigateTo("");
+            navigationManager.NavigateTo("");
         }
         catch (Exception ex)
         {
