@@ -23,12 +23,7 @@ namespace BlazorWithIdentity.Client
             builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<IdentityAuthenticationStateProvider>());
             builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
 
-            builder.Services.AddTransient<IncludeCredentialsHttpMessageHandler>();
-            builder.Services.AddHttpClient("ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-                            .AddHttpMessageHandler<IncludeCredentialsHttpMessageHandler>();
-
-            // Supply HttpClient instances that include cookies when making requests to the server project
-            builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ServerAPI"));
+            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 
             var host = builder.Build();

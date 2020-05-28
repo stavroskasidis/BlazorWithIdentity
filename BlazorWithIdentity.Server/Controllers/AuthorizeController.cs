@@ -26,10 +26,6 @@ namespace BlazorWithIdentity.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginParameters parameters)
         {
-            if(!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(state => state.Errors)
-                                                                       .Select(error => error.ErrorMessage)
-                                                                       .FirstOrDefault());
-
             var user = await _userManager.FindByNameAsync(parameters.UserName);
             if (user == null) return BadRequest("User does not exist");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
@@ -44,10 +40,6 @@ namespace BlazorWithIdentity.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterParameters parameters)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(state => state.Errors)
-                                                                        .Select(error => error.ErrorMessage)
-                                                                        .FirstOrDefault());
-
             var user = new ApplicationUser();
             user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
