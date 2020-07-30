@@ -4,6 +4,7 @@
 
 <AuthorizeView>
     <Authorized>
+        @*Show the menu and the rest of the body*@
         <div class="sidebar">
             <NavMenu />
         </div>
@@ -18,20 +19,13 @@
             </div>
         </div>
     </Authorized>
+    <NotAuthorized>
+        @*Just render the body so that RedirectToLogin works*@
+        @Body
+    </NotAuthorized>
 </AuthorizeView>
 
 @functions{
-
-    [CascadingParameter]
-    Task<AuthenticationState> AuthenticationState { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (!(await AuthenticationState).User.Identity.IsAuthenticated)
-        {
-            navigationManager.NavigateTo("/login");
-        }
-    }
 
     async Task LogoutClick()
     {
