@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Stavros Kasidis (AkiraGTX)",
+  "name": "Blazor With Identity",
+  "identity": "blazor.withidentity",         
+  "groupIdentity":"blazor",
+  "shortName": "blazorwithidentity",
+  "classifications": [ "Web", "Blazor", "WebAssembly" ],
+  "tags": {
+    "language": "C#",
+    "type":"project"
+  },
+  "sourceName": "BlazorWithIdentity",
+  "preferNameDirectory": true
+}

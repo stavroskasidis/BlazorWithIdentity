@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager navigationManager
+@inject IdentityAuthenticationStateProvider authStateProvider
+<div class="page">
+    <AuthorizeView>
+        <Authorized>
+            @*Show the menu and the rest of the body*@
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+
+            <div class="main">
+                <div class="top-row px-4">
+                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
+                </div>
+
+                <div class="content px-4">
+                    @Body
+                </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            @*Just render the body so that RedirectToLogin works*@
+            @Body
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+
+@code{
+
+    async Task LogoutClick()
+    {
+        await authStateProvider.Logout();
+        navigationManager.NavigateTo("/login");
+    }
+}
