@@ -41,7 +41,6 @@ Confirm-Process $proc "Could not find dotnet sdk, please install and run again .
 
 Write-Message "Cleaning artifacts folder"
 Remove-Item -Path artifacts/*.nupkg -Recurse
-Confirm-PreviousCommand
 
 Write-Message "Packing ..."
 dotnet pack templatepack.csproj -c Release -o artifacts /p:VersionSuffix="$VersionSuffix"
