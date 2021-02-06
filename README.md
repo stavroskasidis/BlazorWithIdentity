@@ -3,7 +3,7 @@
 [![Build status](https://dev.azure.com/stavros-kasidis/Blazor%20With%20Identity/_apis/build/status/Blazor%20With%20Identity-CI)](https://dev.azure.com/stavros-kasidis/Blazor%20With%20Identity/_build/latest?definitionId=18) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/BlazorWithIdentity.Template.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWithIdentity.Template) [![Nuget](https://img.shields.io/nuget/dt/BlazorWithIdentity.Template.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWithIdentity.Template) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
 
-A project template with blazor hosted app using cookie based authentication with ef core identity
+A project template for a blazor hosted app using cookie based authentication with ef core identity
 
 ## Using the template
 1. Install the template
