@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="template\**\*" Exclude="template\**\bin\**;template\**\obj\**;**\*.db;**\*.pubxml" />
+    <Content Include="template\**\*" Exclude="template\**\bin\**;template\**\obj\**;**\*.db;**\*.pubxml;template\.vs\**;template\**\*.csproj.user;**\PublishProfiles\**;**\*.json.user" />
     <Compile Remove="**\*" />
   </ItemGroup>
 

@@ -338,4 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/BlazorWithIdentity.Server/data.db
+**/data.db
