@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.2" />
+	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.0-rc.1.21452.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0-rc.1.21452.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0-rc.1.21452.15" />
   </ItemGroup>
 
   <ItemGroup>
