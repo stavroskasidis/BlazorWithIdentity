@@ -1,6 +1,8 @@
 ﻿@page "/"
 @attribute [Authorize]
 
+<PageTitle>Index</PageTitle>
+
 <AuthorizeView>
     <Authorized>
         <h1>Hello @context.User.Identity.Name !!</h1>
