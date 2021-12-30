@@ -53,8 +53,8 @@ if (app.Environment.IsDevelopment())
     using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
     {
         //Note: Microsoft recommends to NOT migrate your database at Startup. 
-        //You should consider your migration strategy according to the guidelines
-        serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+        //You should consider your migration strategy according to the guidelines.
+        serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
     }
 
     app.UseWebAssemblyDebugging();
