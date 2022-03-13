@@ -41,9 +41,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -75,7 +73,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
