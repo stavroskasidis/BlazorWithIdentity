@@ -9,15 +9,15 @@
                 <NavMenu />
             </div>
 
-            <div class="main">
+            <main>
                 <div class="top-row px-4">
-                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
+                    <button type="button" class="btn btn-link" @onclick="@LogoutClick">Logout</button>
                 </div>
 
-                <div class="content px-4">
+                <article class="content px-4">
                     @Body
-                </div>
-            </div>
+                </article>
+            </main>
         </Authorized>
         <NotAuthorized>
             @*Just render the body so that RedirectToLogin works*@
@@ -27,7 +27,7 @@
 </div>
 
 
-@code{
+@code {
 
     async Task LogoutClick()
     {
