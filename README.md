@@ -8,11 +8,11 @@ A project template for a blazor wasm hosted app using cookie based authenticatio
 ## Using the template
 1. Install the template
 ```
-> dotnet new --install BlazorWithIdentity.Template
+dotnet new --install BlazorWithIdentity.Template
 ```
 2. Create a new project
 ```
-> dotnet new blazorwithidentity -o MyBlazorApp
+dotnet new blazorwithidentity -o MyBlazorApp
 ```
 
 ## How to run
