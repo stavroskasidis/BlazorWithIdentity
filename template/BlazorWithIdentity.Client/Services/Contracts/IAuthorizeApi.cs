@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorWithIdentity.Client.Services.Contracts
+namespace BlazorWithIdentity.Client.Services.Contracts;
+
+public interface IAuthorizeApi
 {
-    public interface IAuthorizeApi
-    {
-        Task Login(LoginParameters loginParameters);
-        Task Register(RegisterParameters registerParameters);
-        Task Logout();
-        Task<UserInfo> GetUserInfo();
-    }
+    Task Login(LoginParameters loginParameters);
+    Task Register(RegisterParameters registerParameters);
+    Task Logout();
+    Task<UserInfo> GetUserInfo();
 }
