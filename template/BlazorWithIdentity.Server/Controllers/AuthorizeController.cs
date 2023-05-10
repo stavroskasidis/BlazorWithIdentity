@@ -73,7 +73,8 @@ namespace BlazorWithIdentity.Server.Controllers
                 ExposedClaims = User.Claims
                     //Optionally: filter the claims you want to expose to the client
                     //.Where(c => c.Type == "test-claim")
-                    .ToDictionary(c => c.Type, c => c.Value)
+                    .GroupBy(c => c.Type)
+                    .ToDictionary(g => g.Key, g => string.Join(", ", g.Select(c => c.Value))),
             };
         }
     }
